@@ -1,7 +1,11 @@
 <?php
 
+/**
+ * Classe de chargement dynamique des classes
+ */
 class Loader {
     
+   
     static function register() {
         spl_autoload_register(array(__CLASS__, 'load'));
     }

@@ -2,8 +2,12 @@
 
 namespace Root\Src\Controller;
 
+/**
+ * Controlleur de la traduction
+ */
 class CodeController extends AppController {
     
+    // Peut être appelé depuis l'url
     public static $isCallable = true;
     
     public static function render($params = []) {
@@ -172,6 +176,9 @@ class CodeController extends AppController {
         
     }
     
+    /**
+     * Rendu de la page de traduction
+     */
     public static function translate() {
         
         $language = $_POST['language'];
@@ -245,6 +252,9 @@ class CodeController extends AppController {
         
     }
     
+    /**
+     * Fonction de sauvegarde
+     */
     public static function save() {
         
         $id = $_POST['idToSave'];
@@ -288,6 +298,10 @@ class CodeController extends AppController {
         
     }
     
+    /**
+     * Fonction de chargement d'un algorithme
+     * @param type 
+     */
     public static function open($params = []) {
         
         if(isset($params[0])) {
@@ -300,7 +314,9 @@ class CodeController extends AppController {
         
     }
     
-    
+    /**
+     * Fonction de création d'un nouvel algorithme
+     */
     public static function erase() {
         
         if(isset($_POST['new'])) { unset($_POST['new']); }

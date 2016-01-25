@@ -2,8 +2,12 @@
 
 namespace Root\Src\Controller;
 
+/**
+ * Controller de la page de creation/modification de structure
+ */
 class StructureController extends AppController {
     
+    // Peut être appelé depuis l'url
     public static $isCallable = true;
     
     public static function render($params = []) {
@@ -52,6 +56,10 @@ class StructureController extends AppController {
                 'hadToTranslate' => $hadToTranslate]);
     }
     
+    /**
+     * Méthode de sauvegarde
+     * @param type $params
+     */
     public static function save($params = []) {
         
         isset($params['idStructure']) ? $idStructure = $params['idStructure'] : $idStructure = '';
@@ -123,6 +131,10 @@ class StructureController extends AppController {
         
     }
     
+    /**
+     * Méthode de chargement d'une structure
+     * @param type $params
+     */
     public static function load($params = []) {
         
         if(isset($params[0])){
@@ -177,6 +189,9 @@ class StructureController extends AppController {
         
     }
     
+    /**
+     * Méthode d'effacement des champs (nouvelle structure)
+     */
     public static function erase() {
         
         unset($_POST);

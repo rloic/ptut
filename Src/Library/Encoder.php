@@ -2,8 +2,15 @@
 
 namespace Root\Src\Library;
 
+/**
+ * Permet d'encoder les mots de passe
+ */
 class Encoder {
     
+    /**
+     * Fonction de génération de token aléatoire
+     * @return type
+     */
     public static function generateToken() {
         
         $alphabet = 'azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN0123456789';
@@ -13,6 +20,11 @@ class Encoder {
         
     }
     
+    /**
+     * Encode un mot de passe
+     * @param type $password le mot de passe à encoder
+     * @return string le mot de passe encodé
+     */
     static function encode($password) {
         $key = $password;
         $algorithm = \MCRYPT_RIJNDAEL_128;
@@ -25,6 +37,12 @@ class Encoder {
          return \base64_encode($data);
     }
     
+    /**
+     * Décode le mot de passe avec la clé $key
+     * @param type $password le mot de passe à décoder
+     * @param type $key la clé de décodage
+     * @return type la chaine décodée
+     */
     static function decode($password, $key) {
         
         

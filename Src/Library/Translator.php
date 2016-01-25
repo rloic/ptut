@@ -2,8 +2,18 @@
 
 namespace Root\Src\Library;
 
+/**
+ * Classe de traduction
+ */
 class Translator {
    
+    /**
+     * Traduit le pseudoCode dans un langage avec une liste de structure privée donnée
+     * @param type $pseudoCode
+     * @param type $language
+     * @param type $structures
+     * @return type
+     */
 public static function translate($pseudoCode, $language, $structures = []) {
         
         $result = $pseudoCode;
@@ -36,6 +46,12 @@ public static function translate($pseudoCode, $language, $structures = []) {
          
     }
  
+    /**
+     * Interprète le langage interprété en regex
+     * @param type $structureCode
+     * @return string
+     */
+    
     public static function interpret($structureCode) {
         
         $patterns = array();
@@ -86,6 +102,12 @@ public static function translate($pseudoCode, $language, $structures = []) {
         
     }
     
+    /**
+     * Fonction de mise en page du code traduit
+     * @param string $code
+     * @param type $python
+     * @return string
+     */
     public static function layout($code, $python = false) {
         $code .=" \n ";
         $c = explode("\n", $code);
@@ -149,7 +171,14 @@ public static function translate($pseudoCode, $language, $structures = []) {
         return $result;
     }
      
-    
+    /**
+     * Fonction de test
+     * @param type $pseudoCode
+     * @param type $language
+     * @param type $structure
+     * @param type $translation
+     * @return type
+     */
     public static function testTranslation($pseudoCode, $language, $structure, $translation) {
         
         $result = preg_replace(self::interpret($structure), $translation, $pseudoCode);
@@ -158,6 +187,11 @@ public static function translate($pseudoCode, $language, $structures = []) {
          
     }
     
+    /**
+     * Fonction de génération de l'entête du main
+     * @param type $language
+     * @return string
+     */
     public static function getMainHeader($language) {
         
         if($language == 'c') {
@@ -184,6 +218,12 @@ public static function translate($pseudoCode, $language, $structures = []) {
         
     }
     
+    /**
+     * Fonction de récupération de l'entête
+     * @param type $language
+     * @param type $functionType
+     * @return string
+     */
     public static function getFunctionHeader($language, $functionType) {
         
         $type = self::translate($functionType.' ', $language);

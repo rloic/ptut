@@ -2,6 +2,9 @@
 
 namespace Root\Src\Model;
 
+/**
+ * Classe modèle de l'objet utilisateur
+ */
 class UserModel extends DefaultModel{
     
     private $_id;
@@ -123,6 +126,12 @@ class UserModel extends DefaultModel{
         $this->_password = $password;
     }
     
+    /**
+     * Vérifie si l'utilisateur exite
+     * @param type $needConfirmation
+     * @return boolean, UserModel renvoie false si l'utilisateur n'existe pas sinon
+     * renvoie un utilisateur
+     */
     public function exist($needConfirmation = true) {
         if($needConfirmation) {
             $confirmation = 1;
@@ -151,6 +160,11 @@ class UserModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie si le champs $field ne comprend pas déjà un enregistrement équivalent
+     * @param type $field
+     * @return boolean true si le champs est utilisable avec cette valeur, false sinon
+     */
     public function canUse($field) {
         $objectField = '_'.$field;
         $value = $this->$objectField;
@@ -171,6 +185,10 @@ class UserModel extends DefaultModel{
         
     }
     
+    /**
+     * Crée un utilisateur dans la base s'il n'existe pas
+     * @return boolean true si l'enregistrement s'est effectué, faux sinon
+     */
     public function record() {
         
         $confirmToken = \Root\Src\Library\Encoder::generateToken();
@@ -195,6 +213,10 @@ class UserModel extends DefaultModel{
         
     }
     
+    /**
+     * Met à jour un utilisateur
+     * @return type
+     */
     public function update() {
     
         $statement = ConnectionModel::getConnection()->query('Update user set name = :name, email = :email, avatar = :avatar where id = :id', 
@@ -207,6 +229,10 @@ class UserModel extends DefaultModel{
         
     }
     
+    /**
+     * Met à jour le mot de passe d'un utilisateur
+     * @return type
+     */
     public function updatePassword() {
         $password = \Root\Src\Library\Encoder::encode($this->_password);
         $statement = ConnectionModel::getConnection()->query('Update user set password = :password where id = :id', 
@@ -217,7 +243,10 @@ class UserModel extends DefaultModel{
         
     }
     
-    
+    /**
+     * Active le compte d'un utilisateur
+     * @return \Root\Src\Model\UserModel|boolean
+     */
     public function activate() {
         
         $statement = ConnectionModel::getConnection()->query('Select * From user where id = :id and confirmToken = :confirmToken',

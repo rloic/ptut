@@ -2,10 +2,17 @@
 
 namespace Root\Src\Controller;
 
+/**
+ * Classe de gestion de la connexion utilisateur
+ */
 class ConnectionController extends AppController {
     
+    // Peut être appelé depuis l'url
     public static $isCallable = true;
     
+    /**
+     * Méthode de création d'un utilisateur
+     */
     public static function createAccount() {
        
         if(isset($_POST['action'])) {
@@ -73,6 +80,9 @@ class ConnectionController extends AppController {
         
     }
     
+    /**
+     * Methode de connexion
+     */
     public static function connect() {
         
         if(AppController::getUser() != Null) {
@@ -116,6 +126,9 @@ class ConnectionController extends AppController {
         
     }
     
+    /**
+     * Méthode de déconnexion de l'utilisateur
+     */
     public static function disconnect() {
         
         $user = AppController::destroyUser();
@@ -126,6 +139,10 @@ class ConnectionController extends AppController {
         
     }
     
+    /**
+     * Méthode de confirmation d'un compte utilisateur
+     * @param type $params
+     */
     public static function confirmAccount($params = []) {
         
         $id = null;
@@ -156,6 +173,11 @@ class ConnectionController extends AppController {
         
     }
     
+    /**
+     * Méthode d'envoi de mail de confirmation
+     * @param type $user
+     * @return type
+     */
     public static function sendMail($user) {
         
           $message = "Bonjour veuillez confirmer votre inscription en cliquant sur le lient suivant :";

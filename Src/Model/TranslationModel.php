@@ -2,6 +2,9 @@
 
 namespace Root\Src\Model;
 
+/**
+ * Classe modèle des traductions
+ */
 class TranslationModel extends DefaultModel{
     
     private $_layoutId;
@@ -48,6 +51,11 @@ class TranslationModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la liste des traductions pour un langage
+     * @param type $language
+     * @return \Root\Src\Model\TranslationModel
+     */
     public static function loadTranslationByLanguage($language) {
         
         $result = [];
@@ -70,6 +78,12 @@ class TranslationModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la traduction pour un id de structure et un langage
+     * @param type $id
+     * @param type $language
+     * @return \Root\Src\Model\TranslationModel
+     */
     public static function loadTranslationByIdAndLanguage($id, $language) {
         
         $result = false;
@@ -88,6 +102,10 @@ class TranslationModel extends DefaultModel{
         
     }
     
+    /**
+     * Enregistre la traduction dans la base si elle n'existe pas, sinon la met à jour
+     * @return type
+     */
     public function record() {
         
         if(self::loadTranslationByIdAndLanguage($this->_layoutId, $this->_language)) {
@@ -111,6 +129,10 @@ class TranslationModel extends DefaultModel{
         
     }
     
+    /**
+     * Supprime la traduction de la base de données
+     * @return type
+     */
     public function delete() {
         
         return ConnectionModel::getConnection()->query('Delete from translation where layoutId = :layoutId',

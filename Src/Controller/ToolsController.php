@@ -2,8 +2,12 @@
 
 namespace Root\Src\Controller;
 
+/**
+ * Controller de la modification des outils
+ */
 class ToolsController extends AppController {
     
+    //Peut être appelé depuis l'url
     public static $isCallable = true;
     
     public static function render($params = []) {
@@ -37,6 +41,10 @@ class ToolsController extends AppController {
         parent::getFooter();
     }    
     
+    /**
+     * Méthode de suppression d'une fonction/traduction
+     * @param type $params
+     */
     public static function delete($params = []) {
         
         $id = false;

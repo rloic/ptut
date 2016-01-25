@@ -2,6 +2,9 @@
 
 namespace Root\Src\Library;
 
+/**
+ * Classe de gestion de la session Php
+ */
 class Session {
     
     private $_session;
@@ -12,6 +15,10 @@ class Session {
         $this->_session = session_start();
     }
     
+    /**
+     * Renvoie la session courante
+     * @return type
+     */
     public static function getSession() {
         
         if(self::$instance == Null) {
@@ -24,6 +31,9 @@ class Session {
         
     }
     
+    /**
+     * Détruit la session courante
+     */
     public static function destroy() {
         
         self::$instance = Null;
@@ -31,6 +41,11 @@ class Session {
         
     }
     
+    /**
+     * Enregistre une valeur dans le champs $key
+     * @param type $key
+     * @param type $value
+     */
     public function setValue($key, $value) {
         
         if(!isset($_SESSION['key'])) {
@@ -43,6 +58,11 @@ class Session {
         
     }
     
+    /**
+     * Enregistre un message avec une catégorie et une valeur
+     * @param type $category
+     * @param type $value
+     */
     public function setMsg($category, $value) {
         
         if(!isset($_SESSION['flash'][$category])) {
@@ -55,6 +75,12 @@ class Session {
         
     }
     
+    /**
+     * Renvoie les valeurs du champ $key
+     * @param type $key
+     * @param type $erase
+     * @return type
+     */
     public function getValue($key, $erase = false) {
         
         $result = null;

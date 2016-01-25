@@ -2,6 +2,9 @@
 
 namespace Root\Src\Model;
 
+/**
+ * Classe modèle standard, implémentation de la fonction d'hydratation
+ */
 class DefaultModel {
     
     public function hydrate($donnees) {

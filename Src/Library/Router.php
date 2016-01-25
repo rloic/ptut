@@ -1,9 +1,17 @@
 <?php
 
 namespace Root\Src\Library;
-
+/**
+ * Classe de routage
+ */
 class Router {
     
+    /**
+     * Fonction de routage
+     * Chemin de la forme :
+     * Controller/Methode/param1/param2/etc.
+     * La méthode render est appelée par défaut
+     */
     static public function rout() {
         
         $rout = [];

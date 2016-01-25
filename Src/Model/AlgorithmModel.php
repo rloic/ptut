@@ -2,6 +2,9 @@
 
 namespace Root\Src\Model;
 
+/**
+ * Classe modèle de l'object Algorithme
+ */
 class AlgorithmModel extends DefaultModel{
     
     private $_id;
@@ -12,6 +15,7 @@ class AlgorithmModel extends DefaultModel{
     private $_label;
     private $_type;
     
+    // id de l'utilisateur publique
     const PUBLIC_USER = 12;
     
     public function __construct() {
@@ -102,6 +106,11 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la liste de fonctions de l'utilisateur $userId
+     * @param int $userId l'id de l'utilisateur
+     * @return array la listge des fonctions de l'utilisateur
+     */
     public static function loadFunctionByUser($userId) {
         
         $result = [];
@@ -122,6 +131,11 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la fonction avec l'id $id
+     * @param type $id
+     * @return \Root\Src\Model\AlgorithmModel
+     */
     public static function loadFunctionById($id) {
         
         $result = false;
@@ -140,6 +154,10 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la liste des fonctions publiques
+     * @return array
+     */
     public static function loadPublicFunction() {
         
         $result = [];
@@ -161,6 +179,10 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Enregistre la fonction dans la base si elle n'est pas crée, sinon la met à jour
+     * @return boolean true si l'enregistrement s'est bien déroulé, false sinon
+     */
     public function record() {
         
        // $date = date('Y-m-d H:i:s', time());
@@ -190,6 +212,10 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Supprimer la fonction
+     * @return boolean true si la suppression s'est bien déroulée, false sinon
+     */
     public function delete() {
         
         return ConnectionModel::getConnection()->query('Delete from function where id = :id',

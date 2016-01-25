@@ -2,10 +2,17 @@
 
 namespace Root\Src\Controller;
 
+/**
+ * Controller de la page Account
+ */
 class AccountController extends AppController {
-    
+    // Peut être appelé depuis l'url
     public static $isCallable = true;
     
+    /**
+     * Fonction de rendu par défaut
+     * @param type $params
+     */
     public static function render($params = []) {
         
         $user = AppController::getUser();
@@ -34,6 +41,9 @@ class AccountController extends AppController {
         
     }
     
+    /**
+     * Fonction de mise à jour d'un compte
+     */
     public static function update() {
         
         if(isset($_POST['oldPassword'])) {

@@ -2,6 +2,9 @@
 
 namespace Root\Src\Model;
 
+/**
+ * Classe modèle des objets structures de traductions
+ */
 class StructureModel extends DefaultModel{
     
     private $_id;
@@ -53,6 +56,11 @@ class StructureModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la liste des structures de traduction d'un utilisateur
+     * @param type $userId l'id de l'utilisateur
+     * @return array
+     */
     public static function loadStructureByUser($userId) {
         
         $result = [];
@@ -76,6 +84,11 @@ class StructureModel extends DefaultModel{
         
     }
     
+    /**
+     * Renvoie la structure avec l'id $id
+     * @param type $id
+     * @return \Root\Src\Model\StructureModel
+     */
     public static function loadStructureById($id) {
         
         $result = new StructureModel("","");
@@ -93,6 +106,11 @@ class StructureModel extends DefaultModel{
         
     }
     
+    /**
+     * Crée la structure dans la base de données si elle n'existe pas, sinon la met
+     * à jour
+     * @return type
+     */
     public function record() {
         
         if($this->_id == '') {
@@ -114,6 +132,10 @@ class StructureModel extends DefaultModel{
         
     }
     
+    /**
+     * Supprime la structure de la base de données
+     * @return type
+     */
     public function delete() {
         
         return ConnectionModel::getConnection()->query('Delete from layout where id = :id',
