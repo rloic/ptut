@@ -106,5 +106,33 @@ span {
 
 pre {
     
+    font-family: "Source Code Pro";
+    font-size: 12px;
+    display: block;
+    margin: 2px;
     
+}
+
+.msgBtn {
+    
+    margin: 10px;
+    text-transform: none;
+    display: block;
+    height:auto;
+    text-align:left;
+}
+
+.msgBtn-right {
+    
+    margin: 10px;
+    text-transform: none;
+    display: block;
+    height:auto;
+    text-align:right;
+}
+
+.modal {
+    width: 95%;
+    height: 95%;
+    margin: 0 2.5%;
 }

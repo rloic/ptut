@@ -48,11 +48,19 @@ class ConnectionModel {
      * @return boolean, array renvoie faux si le résultat de la requête est vide
      * sinon renvoie un tableau d'objet 
      */
-    public function query($statement, $params = []) {
+    public function query($statement, $params = [], $limits = []) {
         
         $result = [];
         
-        if($params == []) {
+        if($limits != []) {
+            
+            $statement .= " LIMIT :offset, :limit";
+            
+        }
+        
+        debug($limits);
+        
+        if($params == [] && $limits == []) {
             
             $resultStatements = $this->_db->query($statement);
             
@@ -76,7 +84,21 @@ class ConnectionModel {
         } else {
             
             $prepareStatement = $this->_db->prepare($statement);
+            if($limits != []) {
+                
+                $prepareStatement->bindParam(':offset', $limits[0], \PDO::PARAM_INT);
+                $prepareStatement->bindParam(":limit", $limits[1], \PDO::PARAM_INT);
+                
+            }
+            if($params != []) {
+                
             $prepareStatement->execute($params);
+            
+            } else {
+                
+                $prepareStatement->execute();
+                
+            }
             if(\strtoupper(\substr($statement, 0, 6)) == 'SELECT') {
             
                 while($data = $prepareStatement->fetch(\PDO::FETCH_OBJ)) {

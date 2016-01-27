@@ -223,4 +223,36 @@ class AlgorithmModel extends DefaultModel{
         
     }
     
+    /**
+     * Return the list of the last commented algorithm
+     * @param type $numPage the number of the search page
+     */
+    public static function getMostRecentHelped($numPage = 0, $displayPerPage = 6) {
+        
+        $result = [];
+        
+        $cursor = ConnectionModel::getConnection()->query(
+                "Select function.*
+                 From function, (SELECT max( date ) as commentDate , subjectId
+                                    FROM mail
+                                    GROUP BY subjectId) as lastComment
+                Where function.id = lastComment.subjectId
+                Order by lastComment.commentDate Desc"
+                , [],[$numPage*$displayPerPage,($numPage+1)*$displayPerPage]);
+        
+        $i = 0;
+                
+        while($i < \sizeof($cursor) && $cursor) {
+            
+            $newAlgo = new AlgorithmModel();
+            $newAlgo->hydrate($cursor[$i]);
+            
+            array_push($result, $newAlgo);
+            $i += 1;
+        }
+        
+        return $result;
+        
+    }
+    
 }

@@ -12,5 +12,6 @@ debug('Debug Mod Active');
 
 //Initialisation de la session
 \Root\Src\Controller\AppController::loadSession();
+
 //Routage de l'url
 Router::rout();

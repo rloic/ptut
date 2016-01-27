@@ -12,7 +12,7 @@ class CodeController extends AppController {
     
     public static function render($params = []) {
         
-        
+               
         $method = false;
         $activeFunction = false;
        
@@ -41,7 +41,7 @@ class CodeController extends AppController {
             $method = 'share';
         }
         
-        if(isset($_POST['askforhelp'])) {
+        if(isset($_POST['askForHelp'])) {
             $method = 'askForHelp';
         }
         
@@ -161,6 +161,8 @@ class CodeController extends AppController {
             $pseudoCode = $_POST['pseudoCode'];       
         }
         
+        $helpMsgs = \Root\Src\Model\MailModel::getMsgBySubject($id);
+        
         parent::render(['id' => $id,
                         'selectedLanguage' => $language,
                         'pseudoCode' => $pseudoCode,
@@ -171,7 +173,8 @@ class CodeController extends AppController {
                         'selectedPublicFunctions' => $selectedPublicFunctions,
                         'userStructures' => $userStructures,
                         'selectedUserStructures' => $selectedUserStructures,
-                        'activeFunction' => $activeFunction]);
+                        'activeFunction' => $activeFunction,
+                        'helpMsgs' => $helpMsgs]);
         
         
     }
@@ -324,6 +327,36 @@ class CodeController extends AppController {
         if(isset($_POST['id'])) { unset($_POST['id']); }
         
         if(isset($_POST['pseudoCode'])) { unset($_POST['pseudoCode']); }
+        
+        self::render();
+        
+    }
+    
+    /**
+     * 
+     */
+    public static function askForHelp() {
+        
+        debug($_POST);
+        
+        if(isset($_POST['id']) && isset($_POST['helpMsg']) && AppController::getUser()) {
+            
+            $msg = new \Root\Src\Model\MailModel();
+            $msg->setContent($_POST['helpMsg']);
+            $msg->setSubjectId($_POST['id']);
+            $msg->setOwnerId(AppController::getUser()->getId());
+            debug($msg);
+            $msg->send();
+            
+            AppController::setMsg("success", "Votre demande d'aide a bien été publiée.");
+            
+        } else {
+            
+            AppController::setMsg("warning", "Aucun message n'a été saisi, vous devez en saisir un pour obtenir de l'aide");
+            
+        }
+        
+        unset($_POST['askForHelp']);
         
         self::render();
         

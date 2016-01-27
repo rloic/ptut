@@ -1,7 +1,7 @@
 <?php
 
 //Afficher les logs d'erreur de la fonction debug
-define('DISPLAY_ERROR', false);
+define('DISPLAY_ERROR', true);
 //Dossier racine
 define('ROOT_FOLDER', '/PTUT/');
 

@@ -276,6 +276,21 @@ class UserModel extends DefaultModel{
         
 }
     
+        public static function getUser($id) {
+            
+            $cursor = ConnectionModel::getConnection()->query("Select * From user where id = :id", ["id"=>$id]);
+            
+            if($cursor && \sizeof($cursor)==1) {
+                
+                $user = new UserModel("","");
+                $user->hydrate($cursor[0]);
+                return $user;
+                
+            }
+            
+            return new UserModel("","");
+            
+        }
     
 }
 

@@ -14,7 +14,7 @@ $(document).ready(function(){
   });
         
 </script>
-
+<?php debug($params['user']); ?>
 <form class="row" action="<?php echo ROOT_FOLDER; ?>code" method="post">
    
     <div class="col l12 codeMenu">
@@ -50,7 +50,7 @@ $(document).ready(function(){
         </a> 
 
         <a href="#<?php if($params['user']) { ?>modalStructure<?php } ?>" class="btn waves-effect waves-light<?php if(!$params['user']) {?> disabled <?php } else {?> modal-trigger <?php } ?>">
-          Gérer mes structures
+          Activer mes structures
           <i class="material-icons left">settings</i>
         </a> 
         
@@ -162,7 +162,7 @@ $(document).ready(function(){
 
 <div id="modalOpen" class="modal">
     <div class="modal-content">
-      <h4>Choisissez la fonction a chargér.</h4>
+      <h4>Choisissez la fonction à charger</h4>
       <table class="striped">
           <thead>
               
@@ -196,7 +196,45 @@ $(document).ready(function(){
        <p class="modal-close waves-effect waves-red btn-flat">Fermer</p>
     </div>
 </div>
+<?php debug($params); ?>
+<!-- Modal de demande d'aide --------------------------- -->
+<div id="modalAskForHelp" class="modal">
+    <div class="modal-content">
+      <h4>Demander de l'aide</h4>
+      <?php if ($params['id'] == 0) { ?> 
+      <p>La fonction doit être sauvegardée.</p>
+      <?php } else { ?>
+      <p>Le code que vous avez enregistré sera mis en ligne. Veuillez expliquer votre problème pour que 
+      la communauté puisse vous aider.</p>
+      <!-- On affiche les aides déjà apportées -->
+      <ul style="width:100%;height:310px;overflow:auto">
+      <?php foreach($params['helpMsgs'] as $msg) { ?>
+            <div class="row">
+            <!-- On affiche différemment en fonction de l'émetteur du message -->
+            <?php if($msg->getOwnerId()!=$params['user']->getId()) { ?>
+            <li class='waves-effect waves-light btn left grey lighten-2 black-text msgBtn'>
+                <?php echo \Root\Src\Model\UserModel::getUser($msg->getOwnerId())->getName(); ?>
+                <br /><?php echo $msg->getContent(); ?></li>
+            <?php } else { ?>
+            <li class='waves-effect waves-light btn right light-blue darken-1 msgBtn-right'>Vous<br /><?php echo $msg->getContent(); ?></li>
+            <?php } ?>
+            </div>
+      <?php } ?>
+      </ul>
+            <p style="clear:both">Message :</p>
+       <textarea name="helpMsg" class="materialize-textarea"></textarea>
+       <input type='hidden' name='userId' value='<?php $params['user']->getId(); ?>' />
+      <?php } ?>
+           
+    </div>
+    <div class="modal-footer">
+        <p class="modal-close waves-effect waves-red btn-flat">Fermer</p>
+        <button class=" modal-action waves-effect waves-green btn-flat" type="submit" name="askForHelp">Envoyer</button>
+    </div>
+</div>
 
+
+<!-- Modal de Structure --------------------------- -->
 <div id="modalStructure" class="modal">
     <div class="modal-content">
       <h4>Activer mes structures de traductions</h4>
