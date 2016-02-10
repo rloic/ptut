@@ -14,7 +14,7 @@ class AccountController extends AppController {
      * @param type $params
      */
     public static function render($params = []) {
-        
+
         $user = AppController::getUser();
         
         if(!$user) {

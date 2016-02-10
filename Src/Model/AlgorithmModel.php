@@ -195,6 +195,21 @@ class AlgorithmModel extends DefaultModel{
                     'ownerId' => $this->_ownerId,
                     'label' => $this->_label,
                     'type' => $this->_type]);
+            
+            if($statement) {
+                
+                $function_id = ConnectionModel::getConnection()->lastInsertId();
+                
+                $statement = ConnectionModel::getConnection()->query('Insert into backup values ("", :function_id, NOW(), 1, :content, :label, :type)',
+                        
+                        ['function_id' => $function_id,
+                         ':content' => $this->_content,
+                         ':label' => $this->_label,
+                         ':type' => $this->_type]
+                        
+                        );
+                
+            }
         
         } else {
             

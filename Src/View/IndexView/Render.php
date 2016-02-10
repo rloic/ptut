@@ -19,6 +19,18 @@ $(document).ready(function(){
     
     <h1>Accueil</h1>
     
+    <h5>Dernières fonction publique</h5>
+    
+    <div class="row">
+        
+        
+        
+    </div>
+    
+    <?php if(Root\Src\Controller\AppController::getUser()) { ?>
+    
+    <h5>Demande d'aide</h5>
+    
     <div class="row">
         <?php foreach($params["helpList"] as $help) { ?>
         <div class="col l6">
@@ -62,7 +74,7 @@ $(document).ready(function(){
                     <?php if($msg->getOwnerId()!=$help->getOwnerId()) { ?>
                     
                         <?php if(Root\Src\Controller\AppController::getUser()->getId() == $msg->getOwnerId()) { ?>
-                        <li class='waves-effect waves-light btn left green lighten-2 black-text msgBtn'>
+                        <li class='waves-effect waves-light btn left green lighten-2 white-text msgBtn'>
                         Vous
                         <?php } else { ?>
                         <li class='waves-effect waves-light btn left grey lighten-2 black-text msgBtn'>
@@ -71,7 +83,12 @@ $(document).ready(function(){
                         <br /><?php echo $msg->getContent(); ?></li>
                     <?php } else { ?>
                     <li class='waves-effect waves-light btn right light-blue darken-1 msgBtn-right'>
-                        <?php echo $params["helpMsg"][$help->getId()]["owner"]; ?><br /><?php echo $msg->getContent(); ?></li>
+                        
+                        <?php if($params["helpMsg"][$help->getId()]["owner"] == Root\Src\Controller\AppController::getUser()->getName()) {
+                            echo "Vous";
+                        } else {
+                            echo $params["helpMsg"][$help->getId()]["owner"];
+                        }?><br /><?php echo $msg->getContent(); ?></li>
                     <?php } ?>
                     </div>
               <?php } ?>
@@ -92,6 +109,7 @@ $(document).ready(function(){
         
         <?php } ?>
     </div>
+    <?php } ?>
     
 </div>
 
