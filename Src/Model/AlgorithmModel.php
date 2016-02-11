@@ -195,24 +195,56 @@ class AlgorithmModel extends DefaultModel{
                     'ownerId' => $this->_ownerId,
                     'label' => $this->_label,
                     'type' => $this->_type]);
-            
-            if($statement) {
-                
-                $function_id = ConnectionModel::getConnection()->lastInsertId();
-                
-                $statement = ConnectionModel::getConnection()->query('Insert into backup values ("", :function_id, NOW(), 1, :content, :label, :type)',
-                        
-                        ['function_id' => $function_id,
-                         ':content' => $this->_content,
-                         ':label' => $this->_label,
-                         ':type' => $this->_type]
-                        
-                        );
-                
-            }
         
         } else {
             
+            // Backup déjà crées
+            $oldBackups = BackupModel::loadByFunctionId($this->_id);
+            
+            // Nouveau backup à enregistrer
+            $newBackup = new BackupModel();
+            
+            // Chargement de la version courante de l'algorithme
+            $currentVersion = AlgorithmModel::loadFunctionById($this->_id);
+            
+            $newBackup->setFunctionId($currentVersion->getId());
+            $newBackup->setContent($currentVersion->getContent());
+            $newBackup->setLabel($currentVersion->getLabel());
+            $newBackup->setType($currentVersion->getType());
+            
+            if(\sizeof($oldBackups) < 3) {
+                
+                if(\sizeof($oldBackups) == 0) {
+                    $newBackup->setVersionId(0);
+                } else {
+                    $newBackup->setVersionId($oldBackups[0]->getVersionId()+1);
+                }
+                
+            } else {
+                
+                $backup0 = $oldBackups[0];
+                $backup1 = $oldBackups[1];
+                $backup2 = $oldBackups[2];
+                
+                $backup0->setContent($backup1->getContent());
+                $backup0->setLabel($backup1->getLabel());
+                $backup0->setType($backup1->getType());
+
+                $backup0->update();
+                
+                $backup1->setContent($backup2->getContent());
+                $backup1->setLabel($backup2->getLabel());
+                $backup1->setType($backup2->getType());
+                
+                $backup1->update();
+                
+                $backup2->setContent($newBackup->getContent());
+                $backup2->setLabel($newBackup->getLabel());
+                $backup2->setType($newBackup->getType());
+                
+                $backup2->update();
+                
+            }
             
             $statement = ConnectionModel::getConnection()->query('Update function set name = :name, content = :content, date = NOW(), label = :label, type = :type where id =:id', 
                     ['name' => $this->_name,

@@ -36,3 +36,11 @@ function debug($variable) {
     }
     
 }
+
+function dd($variable) {
+    
+    if(DISPLAY_ERROR) {
+        ?><pre><?php var_dump($variable); die() ?></pre><?php
+    }
+    
+}
