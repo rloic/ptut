@@ -12,7 +12,8 @@ class CodeController extends AppController {
     
     public static function render($params = []) {
         
-               
+        debug($_POST);       
+        
         $method = false;
         $activeFunction = false;
        
@@ -54,13 +55,13 @@ class CodeController extends AppController {
         
         
         $id = NULL;
-        $pseudoCode = '';        
+        $pseudoCode = ''; 
         
         if(isset($params[0])) {
             
             $id = $params[0];
             
-        }
+        }        
         
         $language = 'php';
         
@@ -90,9 +91,41 @@ class CodeController extends AppController {
             
         }
         
+        
+        if(isset($_POST['pseudoCode'])) {
+            $pseudoCode = $_POST['pseudoCode'];       
+        }
+        
+        
+        $backUps = [];
+        
         if(isset($_POST['id'])) {
             
             $id = $_POST['id'];
+            $backUps = \Root\Src\Model\BackupModel::loadByFunctionId($id);
+            
+             
+        
+            if(isset($_POST['restore#0'])) {
+
+                $backUp = \Root\Src\Model\BackupModel::loadByKey($id, 0);
+
+            } elseif(isset($_POST['restore#1'])) {
+
+                $backUp = \Root\Src\Model\BackupModel::loadByKey($id, 1);
+
+            } elseif(isset($_POST['restore#2'])) {
+
+                $backUp = \Root\Src\Model\BackupModel::loadByKey($id, 2);
+
+            }
+
+            if(isset($backUp)) {
+
+                $pseudoCode = $backUp[0]->getContent();
+                
+
+            }
             
         }
         
@@ -157,10 +190,6 @@ class CodeController extends AppController {
             $language = $_POST['language'];
         }
         
-        if(isset($_POST['pseudoCode'])) {
-            $pseudoCode = $_POST['pseudoCode'];       
-        }
-        
         $helpMsgs = \Root\Src\Model\MailModel::getMsgBySubject($id);
         
         parent::render(['id' => $id,
@@ -174,7 +203,8 @@ class CodeController extends AppController {
                         'userStructures' => $userStructures,
                         'selectedUserStructures' => $selectedUserStructures,
                         'activeFunction' => $activeFunction,
-                        'helpMsgs' => $helpMsgs]);
+                        'helpMsgs' => $helpMsgs,
+                        'backUps' => $backUps]);
         
         
     }

@@ -19,7 +19,7 @@ $(document).ready(function(){
     
     <h1>Accueil</h1>
     
-    <h5>Dernières fonction publique</h5>
+    <h5>Dernières fonctions publiques</h5>
     
     <div class="row">
         

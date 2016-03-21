@@ -14,7 +14,7 @@ $(document).ready(function(){
   });
         
 </script>
-<?php debug($params['user']); ?>
+<?php debug($params['backUps']); ?>
 <form class="row" action="<?php echo ROOT_FOLDER; ?>code" method="post">
    
     <div class="col l12 codeMenu">
@@ -231,6 +231,40 @@ $(document).ready(function(){
         <p class="modal-close waves-effect waves-red btn-flat">Fermer</p>
         <button class=" modal-action waves-effect waves-green btn-flat" type="submit" name="askForHelp">Envoyer</button>
     </div>
+</div>
+
+<div id="modalBackUp" class="modal">
+    
+    <div class="modal-content">
+        <h4>Restaurer une ancienne version</h4>
+        
+        <ul class="collapsible" data-collapsible="expendable">  
+        <?php foreach($params['backUps'] as $backUp) { ?>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">code</i>
+                    Version : <?php echo "n " . (-3 + $backUp->getVersionId()); ?> Date : <?php echo $backUp->getDate(); ?>
+                </div>
+                
+                <div class="collapsible-body">
+                      <div class="pseudoCode">
+                         <?php echo nl2br($backUp->getContent()); ?>
+                      </div>
+                    <div>
+                        <button class="btn waves-effect waves-light" type="submit" name="restore#<?php echo $backUp->getVersionId(); ?>">Restaurer</button>
+                    </div>
+                    
+                    
+                </div>
+            </li>
+        <?php } ?>
+        </ul>
+        
+    </div>
+    
+    <div calss="modal-footer">
+        <p class="modal-close waves-effect waves-red btn-flat">Fermer</p>
+    </div>
+    
 </div>
 
 

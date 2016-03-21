@@ -118,10 +118,10 @@ class BackupModel extends DefaultModel{
         
         $result = [];
         
-        $cursor = ConnectionModel::getConnection()->query("Select * From bakcup where functionId = :functionId and versionId = :versionId", [
+        $cursor = ConnectionModel::getConnection()->query("Select * From backup where functionId = :functionId and versionId = :versionId", [
             
-            'functionId' => $this->_functionId,
-            'versionId' => $this->_versionId
+            'functionId' => $functionId,
+            'versionId' => $versionId
             
         ]);
         
