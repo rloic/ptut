@@ -74,3 +74,5 @@
     
 <?php } ?>
 </div>
+<div id="separateur"></div>
+
