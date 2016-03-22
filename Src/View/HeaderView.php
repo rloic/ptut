@@ -37,7 +37,9 @@
       </ul>
     </div>
 </nav>
-        
+    <!-- script pour carry -->
+    <script type="text/javascript" src="<?php echo $baseFolder; ?>Web/js/checkNotifications.js"></script>
+
 <?php } else { ?>
         
 <nav>
