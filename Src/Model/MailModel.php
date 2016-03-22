@@ -71,13 +71,24 @@ class MailModel extends DefaultModel{
                  "subjectId" => $this->_subjectId]);
         
         $this->_id = \Root\Src\Model\ConnectionModel::getConnection()->lastInsertId();
-        
+
+        $message = 'Reponse de ' . $this->_ownerId;
+
         foreach($userList as $user) {
             
             \Root\Src\Model\ConnectionModel::getConnection()->query("Insert into link values (:id,:messageId, :user)", 
             ["id" => "",
              "messageId" => $this->_id,
              "user" => $user]);
+
+            \Root\Src\Model\ConnectionModel::getConnection()->query("Insert into notifications values (:idNotif,:nomNotif, :contenuNotif, :typeNotif, :expediteurNotif, :idUser)",
+                ["idNotif" => "",
+                    "nomNotif" => "Nouveau Message",
+                    "contenuNotif" => $message,
+                    "typeNotif" => "message",
+                    "expediteurNotif" => $this->_ownerId,
+                    "idUser" => $user
+                ]);
             
         }
         
